@@ -40,7 +40,7 @@ interface ISortableItem {
  * implicitly constrained follow its previous sibling.
  *
  * Sorting is performed in a tolerant fashion. If an item's constraints
- * cause a cyclical conflicts, they will be ignored. This will yield a
+ * cause cyclical conflicts, they will be ignored. This will yield a
  * an array which is only approximately sorted (a full sort cannot be
  * acheived if cyles are present).
  */
