@@ -9,80 +9,61 @@
 
 
 /**
- * An object which can be topologically sorted.
+ * A simple graph which support topological sorting.
  */
 export
-interface ISortableItem {
+class TopSort {
   /**
-   * The unique identifier for the item.
+   * Construct a new top sort graph.
    */
-  id?: string;
+  constructor() { }
 
   /**
-   * The id of the item *before which* this item should be placed.
+   * Add an edge to the graph.
+   *
+   * @param fromNode - The name of the ancestor node.
+   *
+   * @param toNode - The name of the dependent node.
    */
-  before?: string;
-}
-
-
-/**
- * Perform a topological sort of an array of sortable items.
- *
- * @param items - The array of items to be sorted.
- *
- * @returns A new array of the items in topologically sorted order.
- *
- * #### Notes
- * Warnings will be logged if any of the items have a duplicate `id`
- * or an invalid `before` reference.
- *
- * If a `before` reference is not provided for an item, it will be
- * implicitly constrained follow its previous sibling.
- *
- * Sorting is performed in a tolerant fashion. If an item's constraints
- * cause cyclical conflicts, they will be ignored. This will yield a
- * an array which is only approximately sorted (a full sort cannot be
- * acheived if cyles are present).
- */
-export
-function topSort<T extends ISortableItem>(items: T[]): T[] {
-  // Collect the item ids, creating temp ids as needed.
-  var tick = 0;
-  var prefix = '-auto-item-id-';
-  var idArray = new Array<string>(items.length);
-  var itemMap: StringMap<T> = Object.create(null);
-  for (var i = 0, n = items.length; i < n; ++i) {
-    var id: string;
-    var item = items[i];
-    if (item.id && item.id in itemMap) {
-      console.warn('duplicate item id:', item.id);
-      id = prefix + tick++;
+  addEdge(fromNode: string, toNode: string): void {
+    if (!(fromNode in this._graph)) {
+      this._graph[fromNode] = [];
+    }
+    if (toNode in this._graph) {
+      this._graph[toNode].push(fromNode);
     } else {
-      id = item.id || (prefix + tick++);
-    }
-    idArray[i] = id;
-    itemMap[id] = item;
-  }
-
-  // Create and populate the graph with the item ids. If an
-  // item has no position info, preserve the relative order.
-  var graph: Graph = Object.create(null);
-  for (var i = 0, n = idArray.length; i < n; ++i) {
-    var id = idArray[i];
-    var item = items[i];
-    var validBefore = item.before in itemMap;
-    if (validBefore) {
-      addEdge(graph, id, item.before);
-    } else if (item.before) {
-      console.warn('invalid `before` reference:', item.before);
-    }
-    if (i > 0 && !validBefore) {
-      addEdge(graph, idArray[i - 1], id);
+      this._graph[toNode] = [fromNode];
     }
   }
 
-  // Sort the graph and return a new array of sorted items.
-  return sortGraph(graph).map(id => itemMap[id]);
+  /**
+   * Topologically sort the graph.
+   *
+   * @returns An array of topologically sorted nodes.
+   *
+   * #### Notes
+   * If a cycle is encountered in the graph, it will be ignored. The
+   * result will be an array which is only approximately sorted, since
+   * a true sort is not possible in the presence of cycles.
+   */
+  sort(): string[] {
+    var graph = this._graph;
+    var sorted: string[] = [];
+    var visited: StringMap<boolean> = Object.create(null);
+    for (var node in graph) { visit(node); }
+    return sorted;
+
+    function visit(node: string): void {
+      if (node in visited) {
+        return;
+      }
+      visited[node] = true;
+      graph[node].forEach(visit);
+      sorted.push(node);
+    }
+  }
+
+  private _graph: StringMap<string[]> = Object.create(null);
 }
 
 
@@ -90,60 +71,3 @@ function topSort<T extends ISortableItem>(items: T[]): T[] {
  * A type alias for a generic string map.
  */
 type StringMap<T> = { [key: string]: T };
-
-
-/**
- * A type alias for a string:string graph.
- */
-type Graph = StringMap<string[]>;
-
-
-/**
- * Add an edge to a graph.
- *
- * @param graph - The graph of interest.
- *
- * @param fromNode - The ancestor node.
- *
- * @param toNode - The dependent node.
- */
-function addEdge(graph: Graph, fromNode: string, toNode: string): void {
-  if (!(fromNode in graph)) {
-    graph[fromNode] = [];
-  }
-  if (toNode in graph) {
-    graph[toNode].push(fromNode);
-  } else {
-    graph[toNode] = [fromNode];
-  }
-}
-
-
-/**
- * Topologically sort a graph.
- *
- * @param graph - The graph of interest.
- *
- * @returns The topologically sorted nodes.
- *
- * #### Notes
- * If a cycle is encountered in the graph, it is ignored, which
- * means the result will only be approximately sorted, since a
- * true sort is not possible.
- */
-function sortGraph(graph: Graph): string[] {
-  var sorted: string[] = [];
-  var visited: StringMap<boolean> = Object.create(null);
-  Object.keys(graph).forEach(visit);
-  return sorted;
-
-  function visit(node: string): void {
-    if (node in visited) {
-      console.warn('order conflict:', node);
-      return;
-    }
-    visited[node] = true;
-    graph[node].forEach(visit);
-    sorted.push(node);
-  }
-}
