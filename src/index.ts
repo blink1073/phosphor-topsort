@@ -9,7 +9,7 @@
 
 
 /**
- * A simple graph which support topological sorting.
+ * A simple graph which supports topological sorting.
  */
 export
 class TopSort {
