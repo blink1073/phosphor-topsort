@@ -7,7 +7,6 @@
 |----------------------------------------------------------------------------*/
 'use strict';
 
-
 import expect = require('expect.js');
 
 import {
@@ -15,99 +14,61 @@ import {
 } from '../../lib/index';
 
 
-// from stackoverflow:
-// http://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript
-function arraysEqual(a: any[], b: any[]): boolean {
-  if (a === b) return true;
-  if (a == null || b == null) return false;
-  if (a.length != b.length) return false;
-  for (var i = 0; i < a.length; ++i) {
-    if (a[i] !== b[i]) return false;
-  }
-  return true;
-}
-
-
 describe('phosphor-topsort', () => {
 
-  describe('topSort', () => {
+  describe('TopSort', () => {
 
-    it('should correctly order a simple array', () => {
-      var data = [
+    it('should correctly order the input', () => {
+      var data: Array<[string, string]> = [
         ['a', 'b'],
         ['b', 'c'],
         ['c', 'd'],
         ['d', 'e']
       ];
-
-      var ts = new TopSort(data);
-      var result = ts.sort();
-      var expected  = ['a','b','c','d','e'];
-
-      expect(arraysEqual(result, expected)).to.be(true);
-
+      var result = TopSort.sort(data);
+      expect(result).to.eql(['a', 'b', 'c', 'd', 'e']);
     });
 
-    it('should correctly order with shuffled inputs', () => {
-      var data = [
+    it('should correctly order shuffled input', () => {
+      var data: Array<[string, string]> = [
         ['d', 'e'],
         ['c', 'd'],
         ['a', 'b'],
-        ['c', 'e'],
         ['b', 'c']
       ];
-
-      var ts = new TopSort(data);
-      var result = ts.sort();
-      var expected = ['a','b','c','d','e'];
-
-      expect(arraysEqual(result, expected)).to.be(true);
-
+      var result = TopSort.sort(data);
+      expect(result).to.eql(['a', 'b', 'c', 'd', 'e']);
     });
 
     it('should return an approximate order when a cycle is present', () => {
-      var data = [
+      var data: Array<[string, string]> = [
         ['a', 'b'],
         ['b', 'c'],
         ['c', 'd'],
         ['c', 'b'],
         ['d', 'e']
       ];
-
-      var ts = new TopSort(data);
-      var result = ts.sort();
-
+      var result = TopSort.sort(data);
       expect(result.indexOf('a')).to.be(0);
       expect(result.indexOf('e')).to.be(4);
-      expect(result.indexOf('b')).to.be
-        .greaterThan(0)
-        .lessThan(4);
-      expect(result.indexOf('c')).to.be
-        .greaterThan(0)
-        .lessThan(4);
-      expect(result.indexOf('d')).to.be
-        .greaterThan(0)
-        .lessThan(4);
-
+      expect(result.indexOf('b')).to.be.greaterThan(0).lessThan(4);
+      expect(result.indexOf('c')).to.be.greaterThan(0).lessThan(4);
+      expect(result.indexOf('d')).to.be.greaterThan(0).lessThan(4);
     });
 
-    it('should return a valid order in an under-constrained system', () => {
-      var data = [
+    it('should return a valid order when under-constrained', () => {
+      var data: Array<[string, string]> = [
         ['a', 'b'],
         ['a', 'c'],
         ['a', 'd'],
         ['a', 'e']
       ];
-
-      var ts = new TopSort(data);
-      var result = ts.sort();
-
+      var result = TopSort.sort(data);
       expect(result.indexOf('a')).to.be(0);
       expect(result.indexOf('b')).to.be.greaterThan(0);
       expect(result.indexOf('c')).to.be.greaterThan(0);
       expect(result.indexOf('d')).to.be.greaterThan(0);
       expect(result.indexOf('e')).to.be.greaterThan(0);
-
     });
 
   });
