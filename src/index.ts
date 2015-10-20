@@ -15,8 +15,16 @@ export
 class TopSort {
   /**
    * Construct a new top sort graph.
+   *
+   * @param - (optional) array of edges to initialise the graph.
    */
-  constructor() { }
+  constructor(edges?: string[][]) { 
+    if (edges !== undefined) {
+      for (var i = 0; i<edges.length; ++i) {
+        this.addEdge(edges[i][0], edges[i][1]);
+      }
+    }
+  }
 
   /**
    * Add an edge to the graph.
