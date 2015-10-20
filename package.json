@@ -1,6 +1,6 @@
 {
   "name": "phosphor-topsort",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A module for simple topological sorting.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
