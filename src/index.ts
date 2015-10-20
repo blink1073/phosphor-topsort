@@ -14,17 +14,39 @@
 export
 class TopSort {
   /**
-   * Construct a new top sort graph.
+   * Construct a new top sort graph from an array of edges.
    *
-   * @param - (optional) array of edges to initialise the graph.
+   * @param edges - The array of edges to add to the graph. Each
+   *   edge is represented as a 2-tuple of `[fromNode, toNode]`.
+   *
+   * @returns A new top sort graph initialized with the given edges.
    */
-  constructor(edges?: string[][]) { 
-    if (edges !== undefined) {
-      for (var i = 0; i<edges.length; ++i) {
-        this.addEdge(edges[i][0], edges[i][1]);
-      }
+  static fromEdges(edges: Array<[string, string]>): TopSort {
+    var graph = new TopSort();
+    for (var i = 0, n = edges.length; i < n; ++i) {
+      var [fromNode, toNode] = edges[i];
+      graph.addEdge(fromNode, toNode);
     }
+    return graph;
   }
+
+  /**
+   * A convenience function to sort an array of edges.
+   *
+   * @param edges - The array of edges to add to the graph. Each
+   *   edge is represented as a 2-tuple of `[fromNode, toNode]`.
+   *
+   * @returns The sorted array of nodes. If a cycle is present in
+   *   the graph, the return value will be approximately sorted.
+   */
+  static sort(edges: Array<[string, string]>): string[] {
+    return TopSort.fromEdges(edges).sort();
+  }
+
+  /**
+   * Construct a new top sort graph.
+   */
+  constructor() { }
 
   /**
    * Add an edge to the graph.
@@ -51,20 +73,18 @@ class TopSort {
    *
    * #### Notes
    * If a cycle is encountered in the graph, it will be ignored. The
-   * result will be an array which is only approximately sorted, since
+   * result will be an array which is only approximately sorted, as
    * a true sort is not possible in the presence of cycles.
    */
   sort(): string[] {
     var graph = this._graph;
     var sorted: string[] = [];
     var visited: StringMap<boolean> = Object.create(null);
-    for (var node in graph) { visit(node); }
+    for (var node in graph) visit(node);
     return sorted;
 
     function visit(node: string): void {
-      if (node in visited) {
-        return;
-      }
+      if (node in visited) return;
       visited[node] = true;
       graph[node].forEach(visit);
       sorted.push(node);
