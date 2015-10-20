@@ -103,6 +103,8 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="topsort.html#addedge" class="tsd-kind-icon">add<wbr>Edge</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="topsort.html#sort" class="tsd-kind-icon">sort</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="topsort.html#fromedges" class="tsd-kind-icon">from<wbr>Edges</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="topsort.html#sort-1" class="tsd-kind-icon">sort</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,13 +116,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Top<wbr>Sort<span class="tsd-signature-symbol">(</span>edges<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="topsort.html" class="tsd-signature-type">TopSort</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Top<wbr>Sort<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="topsort.html" class="tsd-signature-type">TopSort</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L15">index.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L44">index.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -128,12 +130,6 @@
 									<p>Construct a new top sort graph.</p>
 								</div>
 							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> edges: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="topsort.html" class="tsd-signature-type">TopSort</a></h4>
 						</li>
 					</ul>
@@ -147,7 +143,7 @@
 					<div class="tsd-signature tsd-kind-icon">_graph<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">StringMap</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L74">index.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L94">index.ts:94</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,7 +160,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L36">index.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L58">index.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -201,7 +197,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L57">index.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L79">index.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -213,8 +209,75 @@
 							<p>An array of topologically sorted nodes.</p>
 							<h4 id="notes">Notes</h4>
 							<p>If a cycle is encountered in the graph, it will be ignored. The
-								result will be an array which is only approximately sorted, since
+								result will be an array which is only approximately sorted, as
 							a true sort is not possible in the presence of cycles.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="fromedges" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Edges</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Edges<span class="tsd-signature-symbol">(</span>edges<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="topsort.html" class="tsd-signature-type">TopSort</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L24">index.ts:24</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Construct a new top sort graph from an array of edges.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edges: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The array of edges to add to the graph. Each
+										edge is represented as a 2-tuple of <code>[fromNode, toNode]</code>.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="topsort.html" class="tsd-signature-type">TopSort</a></h4>
+							<p>A new top sort graph initialized with the given edges.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="sort-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> sort</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">sort<span class="tsd-signature-symbol">(</span>edges<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-topsort/blob/HEAD/src/index.ts#L42">index.ts:42</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A convenience function to sort an array of edges.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edges: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The array of edges to add to the graph. Each
+										edge is represented as a 2-tuple of <code>[fromNode, toNode]</code>.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>The sorted array of nodes. If a cycle is present in
+							the graph, the return value will be approximately sorted.</p>
 						</li>
 					</ul>
 				</section>
@@ -246,6 +309,12 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="topsort.html#sort" class="tsd-kind-icon">sort</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="topsort.html#fromedges" class="tsd-kind-icon">from<wbr>Edges</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="topsort.html#sort-1" class="tsd-kind-icon">sort</a>
 							</li>
 						</ul>
 					</li>
